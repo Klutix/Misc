@@ -1,3 +1,5 @@
+#klutix
+#this class was created as a educational challenge
 class Node():
     node1 = None
     node2 = None
