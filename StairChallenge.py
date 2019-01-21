@@ -28,7 +28,7 @@
 ##
 ##    = 27
 
-##    Build an solution thats accepts an integer
+##    Build a solution thats accepts an integer
 ##    and builds all stair possibilities for a given number.
 
 
