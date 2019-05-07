@@ -21,34 +21,29 @@ def rotate_point_counter(x1,y1,x2,y2,degrees):
 
 def octo_fractal(loops,x,y,nx,ny,flip = True):
     draw = ImageDraw.Draw(im)
-    if loops == 0:
-        draw.line((x,y,nx,ny),fill=250)
-
+    if loops == 0:    
+        draw.line((x,y,nx,ny),fill=(int(y),int(x-y),int(y+-x)))
     else:
 
         #succesfully finds first 3rd
-        midp1 = ((nx-x)/3+x,(ny-y)/3+y)
-        midp2  = (((nx-x)/3)*2+x,((ny-y)/3*2)+y)
+        midp1 = ((nx-x)/2/2+x,(ny-y)/2/2+y)
+        midp2  = (((nx-x)/4)+x,((ny-y)/4)+y)
 
-        #rotate cordinates fron first mid
+        #rotate cordinates
         if flip == True:        
             new_x1, new_y1 =rotate_point_counter(x,y,midp1[0],midp1[1],45)
-        else:
-            new_x1, new_y1 =rotate_point_clockwise(x,y,midp1[0],midp1[1],45)
-       
-        octo_fractal(loops-1,x, y, new_x1, new_y1,flip = not flip)
-
-        if flip == True: 
             new_x2, new_y2 =rotate_point_clockwise(nx,ny,midp2[0],midp2[1],45)
         else:
+            new_x1, new_y1 =rotate_point_clockwise(x,y,midp1[0],midp1[1],45)
             new_x2, new_y2 =rotate_point_counter(nx,ny,midp2[0],midp2[1],45)
 
+        octo_fractal(loops-1,x, y, new_x1, new_y1,flip = not flip)
         octo_fractal(loops-1,new_x1,new_y1,new_x2,new_y2,flip =  flip)
         octo_fractal(loops-1,nx, ny, new_x2, new_y2, flip =  flip)
 
     
    
-octo_fractal(10,0,im.size[1]-50,im.size[0],im.size[1]-50,flip=True)
+octo_fractal(11,0,im.size[1]-50,im.size[0],im.size[1]-50,flip=True)
 
 im.save("/home/oem/Desktop/bellco-feedback/test.png", "PNG")
 
