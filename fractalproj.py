@@ -19,6 +19,37 @@ def rotate_point_counter(x1,y1,x2,y2,degrees):
     new_y = (y2 - y1)*sin(degrees * pi / 180)-(x2 - x1)*cos(degrees * pi / 180)+y1
     return (new_x,new_y)
 
+def penta_fractal(loops,x,y,nx,ny,flip = True):
+    draw = ImageDraw.Draw(im)
+    if loops == 0:    
+        draw.line((x,y,nx,ny),fill=(int(y/2-x/6),int(x/4-y/2),int(x/4-y/4)))
+    else:
+
+    
+        #rotate cordinates
+        if flip == True:
+            if x == nx or y == ny:        
+                midp1 = rotate_point_counter(x,y,nx,ny,45)      
+                midp2 = rotate_point_clockwise(nx,ny,x,y,45)
+            else:
+                midp1 = rotate_point_counter(x,y,nx,ny,72)      
+                midp2 = rotate_point_clockwise(nx,ny,x,y,72)
+        else:
+            if x == nx or y == ny:
+                midp1 = rotate_point_clockwise(x,y,nx,ny,45)
+                midp2 = rotate_point_counter(nx,ny,x,y,45)
+            else:
+                midp1 = rotate_point_clockwise(x,y,nx,ny,72)
+                midp2 = rotate_point_counter(nx,ny,x,y,72)
+
+        penta_fractal(loops-1,x,y,midp1[0],midp1[1], flip = not flip)
+        penta_fractal(loops-1,midp2[0],midp2[1],midp1[0],midp1[1],flip = not flip)
+        penta_fractal(loops-1,midp2[0], midp2[1],nx,ny, flip = not flip)
+
+penta_fractal(11,400,im.size[1]-250,im.size[0]-400,im.size[1]-250,flip=True)
+
+im.save("/home/oem/Desktop/bellco-feedback/test.png", "PNG")
+
 def octo_fractal(loops,x,y,nx,ny,flip = True):
     draw = ImageDraw.Draw(im)
     if loops == 0:    
@@ -43,9 +74,9 @@ def octo_fractal(loops,x,y,nx,ny,flip = True):
 
     
    
-octo_fractal(11,0,im.size[1]-50,im.size[0],im.size[1]-50,flip=True)
+#octo_fractal(11,0,im.size[1]-50,im.size[0],im.size[1]-50,flip=True)
 
-im.save("/home/oem/Desktop/bellco-feedback/test.png", "PNG")
+#im.save("/home/oem/Desktop/bellco-feedback/test.png", "PNG")
 
 def fract(n,img,base_image,size=None):
     if n == 0:
